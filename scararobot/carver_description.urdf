@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<robot name="scara_robot">
+
+<!-- Base Link -->
+<link name="base_link">
+<visual>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\base_link.STL"/>
+    </geometry>
+</visual>
+<collision>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\base_link.STL"/>
+    </geometry>
+</collision>
+<inertial>
+    <mass value="1.0"/> <!-- Set appropriate mass -->
+    <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/> <!-- Set inertia values -->
+</inertial>
+</link>
+
+<!-- Link 1 -->
+<link name="link1">
+<visual>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\link1.STL"/>
+    </geometry>
+</visual>
+<collision>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\link1.STL"/>
+    </geometry>
+</collision>
+<inertial>
+    <mass value="1.0"/> <!-- Set appropriate mass -->
+    <inertia ixx="0.02" ixy="0.0" ixz="0.0" iyy="0.02" iyz="0.0" izz="0.02"/> <!-- Set inertia values -->
+</inertial>
+</link>
+
+<!-- Link 2 -->
+<link name="link2">
+<visual>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\link2.STL"/>
+    </geometry>
+</visual>
+<collision>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\link2.STL"/>
+    </geometry>
+</collision>
+<inertial>
+    <mass value="1.0"/> <!-- Set appropriate mass -->
+    <inertia ixx="0.02" ixy="0.0" ixz="0.0" iyy="0.02" iyz="0.0" izz="0.02"/> <!-- Set inertia values -->
+</inertial>
+</link>
+
+<!-- Shaft -->
+<link name="shaft">
+<visual>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\shaft.STL"/>
+    </geometry>
+</visual>
+<collision>
+    <geometry>
+    <mesh filename="C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\scararobot\meshes\shaft.STL"/>
+    </geometry>
+</collision>
+<inertial>
+    <mass value="1.0"/> <!-- Set appropriate mass -->
+    <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/> <!-- Set inertia values -->
+</inertial>
+</link>
+
+<!-- Joints -->
+<!-- Joint 1 (base_link to link1) -->
+<joint name="joint1" type="revolute">
+<parent link="base_link"/>
+<child link="link1"/>
+<origin xyz="0 0 0" rpy="0 0 0"/>
+<axis xyz="0 0 1"/>
+<limit effort="100.0" velocity="1.0" lower="-3.1416" upper="3.1416"/>
+<dynamics damping="0.1" friction="0.1"/>
+</joint>
+
+<!-- Joint 2 (link1 to link2) -->
+<joint name="joint2" type="revolute">
+<parent link="link1"/>
+<child link="link2"/>
+<origin xyz="320 0 0" rpy="0 0 0"/>
+<axis xyz="0 0 1"/>
+<limit effort="100.0" velocity="1.0" lower="-3.1416" upper="3.1416"/>
+<dynamics damping="0.1" friction="0.1"/>
+</joint>
+
+<!-- Joint 3 (link2 to shaft) -->
+<joint name="joint3" type="revolute">
+<parent link="link2"/>
+<child link="shaft"/>
+<origin xyz="320 0 0" rpy="0 0 0"/>
+<axis xyz="0 0 1"/>
+<limit effort="100.0" velocity="1.0" lower="-3.1416" upper="3.1416"/>
+<dynamics damping="0.1" friction="0.1"/>
+</joint>
+
+</robot>

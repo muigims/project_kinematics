@@ -42,7 +42,7 @@ def separate_points_by_layers(gcode_file):
     return layers_of_points
 
 # Provide the path to your G-code file
-gcode_file_path = r"C:\Users\muigims\Desktop\fibo\year3\kinematics\project kine\flatnew.gcode"
+gcode_file_path = r"C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\new_square.gcode"
 layers_of_points = separate_points_by_layers(gcode_file_path)
 
 # Function to calculate Euclidean distance
@@ -232,3 +232,205 @@ ani = FuncAnimation(
 
 # Show the animation
 plt.show()
+
+
+
+#-------------------------------------------------------------------------------------------------
+# import roboticstoolbox as rtb
+# import numpy as np
+# from math import pi
+
+# # แปลงค่าจากมิลลิเมตรเป็นเมตร
+# a_1 = 0.145      # ความยาวของแขนแรก (100 มม. / 1000 = 0.1 เมตร)
+# a_2 = 0.145      # ความยาวของแขนที่สอง (100 มม. / 1000 = 0.1 เมตร)
+# d3_min = 0.0   # ตำแหน่ง Z ต่ำสุดของข้อต่อ Prismatic (เมตร)
+# d3_max = 0.1   # ตำแหน่ง Z สูงสุดของข้อต่อ Prismatic (100 มม. / 1000 = 0.1 เมตร)
+
+# # สร้างหุ่นยนต์ SCARA ด้วยหน่วยเมตร
+# robot = rtb.DHRobot([
+#     # ข้อต่อที่หนึ่ง: Revolute Joint (หมุนรอบแกน Z)
+#     rtb.RevoluteMDH(alpha=0.0, a=a_1, d=0.0, offset=0.0, qlim=[-pi, pi]),
+#     # ข้อต่อที่สอง: Revolute Joint (หมุนรอบแกน Z)
+#     rtb.RevoluteMDH(alpha=0.0, a=a_2, d=0.0, offset=0.0, qlim=[-pi, pi]),
+#     # ข้อต่อที่สาม: Prismatic Joint (เคลื่อนที่ตามแกน Z)
+#     rtb.PrismaticMDH(alpha=0.0, a=0.0, theta=0.0, offset=0.0, qlim=[d3_min, d3_max]),
+# ], name='SCARA Robot')
+
+# from spatialmath import SE3
+
+# # ตำแหน่งเป้าหมาย (แปลงเป็นเมตร)
+# x_target = 0.1  # 110 มม. / 1000 = 0.110 เมตร
+# y_target = 0.1  # 110 มม. / 1000 = 0.110 เมตร
+# z_target = 0.1  # 1 มม. / 1000 = 0.001 เมตร
+
+# # ฟังก์ชัน inverse kinematics แบบเชิงวิเคราะห์สำหรับ SCARA
+# def scara_ik(x, y, z, a1, a2):
+#     r = np.hypot(x, y)
+#     cos_q2 = (r**2 - a1**2 - a2**2) / (2 * a1 * a2)
+#     # ตรวจสอบว่าค่า cos_q2 อยู่ในช่วง [-1, 1] หรือไม่
+#     if abs(cos_q2) > 1.0:
+#         print("ตำแหน่งเป้าหมายอยู่นอกขอบเขตการเข้าถึง")
+#         return None
+#     sin_q2 = np.sqrt(1 - cos_q2**2)
+#     q2_options = [np.arctan2(sin_q2, cos_q2), np.arctan2(-sin_q2, cos_q2)]
+#     solutions = []
+#     for q2 in q2_options:
+#         k1 = a1 + a2 * np.cos(q2)
+#         k2 = a2 * np.sin(q2)
+#         q1 = np.arctan2(y, x) - np.arctan2(k2, k1)
+#         solutions.append((q1, q2))
+#     return solutions
+
+# # เรียกใช้ฟังก์ชัน inverse kinematics
+# solutions = scara_ik(x_target, y_target, z_target, a_1, a_2)
+
+# if solutions is None:
+#     print("ตำแหน่งเป้าหมายไม่สามารถเข้าถึงได้")
+# else:
+#     found_solution = False
+#     for idx, (q1, q2) in enumerate(solutions):
+#         d3 = z_target  # การเคลื่อนที่ตามแกน Z
+#         q = np.array([q1, q2, d3])
+#         # ตรวจสอบว่ามุมข้อต่ออยู่ในขอบเขตหรือไม่
+#         if robot.islimit(q):
+#             print(f"คำตอบที่ {idx+1} อยู่นอกขอบเขตของข้อต่อ")
+#         else:
+#             found_solution = True
+#             print(f"คำตอบที่ {idx+1}:")
+#             print(f"q1 = {np.degrees(q1):.2f} องศา")
+#             print(f"q2 = {np.degrees(q2):.2f} องศา")
+#             print(f"d3 = {d3:.4f} เมตร")
+#             # ตรวจสอบตำแหน่งด้วย forward kinematics
+#             T = robot.fkine(q)
+#             print(f"ตำแหน่งที่ได้จาก forward kinematics: {T.t}")
+#     if not found_solution:
+#         print("ไม่มีคำตอบที่อยู่ในขอบเขตของข้อต่อ")
+
+# import numpy as np
+# import matplotlib.pyplot as plt
+
+# # ความยาวแขนหุ่นยนต์
+# a1 = 0.145  # เมตร
+# a2 = 0.145  # เมตร
+
+# # สร้างกริดของมุมข้อต่อ
+# theta1 = np.linspace(np.pi, 0, 300)
+# theta2 = np.linspace(30, 0, 300)
+# Theta1, Theta2 = np.meshgrid(theta1, theta2)
+
+# # คำนวณตำแหน่งปลายแขนหุ่นยนต์ในระนาบ XY
+# X = a1 * np.cos(Theta1) + a2 * np.cos(Theta1 + Theta2)
+# Y = a1 * np.sin(Theta1) + a2 * np.sin(Theta1 + Theta2)
+
+# # แสดงพื้นที่การทำงานในระนาบ XY
+# plt.figure(figsize=(8,8))
+# plt.plot(X, Y, '.', markersize=1)
+# plt.xlabel('X (เมตร)')
+# plt.ylabel('Y (เมตร)')
+# plt.title('พื้นที่การทำงานของหุ่นยนต์ SCARA ในระนาบ XY')
+# plt.axis('equal')
+# plt.grid(True)
+# plt.show()
+
+
+import roboticstoolbox as rtb
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ---- Robot Parameters ----
+# ความยาวของแขนหุ่นยนต์ (เมตร)
+# a_1 = 0.145      # ความยาวของแขนแรก (100 มม.)
+# a_2 = 0.145      # ความยาวของแขนที่สอง (100 มม.)
+d3_min = 0.0   # ตำแหน่ง Z ต่ำสุดของข้อต่อ Prismatic (0 มม.)
+d3_max = 0.2   # ตำแหน่ง Z สูงสุดของข้อต่อ Prismatic (100 มม.)
+
+a_1 = 0.320      # ความยาวของแขนแรก (100 มม.)
+a_2 = 0.320      # ความยาวของแขนที่สอง (100 มม.)
+
+# สร้างหุ่นยนต์ SCARA ด้วย MDH parameters
+robot = rtb.DHRobot([
+    rtb.RevoluteMDH(alpha=0.0, a=a_1, d=0.0, offset=0.0, qlim=[-np.pi, np.pi]),
+    rtb.RevoluteMDH(alpha=0.0, a=a_2, d=0.0, offset=0.0, qlim=[-np.pi, np.pi]),
+    rtb.PrismaticMDH(alpha=0.0, a=0.0, theta=0.0, offset=0.0, qlim=[d3_min, d3_max]),
+], name='SCARA Robot')
+
+# ---- Generate Workspace ----
+# สร้างกริดของมุมข้อต่อ
+theta1 = np.linspace(np.pi, 0, 300)
+theta2 = np.linspace(30, 0, 300)
+Theta1, Theta2 = np.meshgrid(theta1, theta2)
+
+# คำนวณตำแหน่งปลายแขนหุ่นยนต์ในระนาบ XY
+X = a_1 * np.cos(Theta1) + a_2 * np.cos(Theta1 + Theta2)
+Y = a_1 * np.sin(Theta1) + a_2 * np.sin(Theta1 + Theta2)
+
+# ---- Use Coordinates from optimal_path ----
+# สมมติว่า optimal_path มีอยู่แล้ว และเป็นลิสต์ของจุด [(x1, y1, z1), (x2, y2, z2), ...]
+
+# แยกพิกัด x, y, z
+x_coords = [point[0] for point in optimal_path]
+y_coords = [point[1] for point in optimal_path]
+z_coords = [point[2] for point in optimal_path]
+
+x_coords = np.array(x_coords) / 1000.0  # แปลงเป็นเมตร
+y_coords = np.array(y_coords) / 1000.0
+z_coords = np.array(z_coords) / 1000.0
+# หากพิกัดเป็นมิลลิเมตรและต้องการแปลงเป็นเมตร ให้ใช้:
+# x_coords = [x / 1000.0 for x in x_coords]
+# y_coords = [y / 1000.0 for y in y_coords]
+# z_coords = [z / 1000.0 for z in z_coords]
+
+# ---- Visualization ----
+plt.figure(figsize=(8, 8))
+plt.plot(X, Y, '.', markersize=1, label='พื้นที่การทำงาน')  # พื้นที่การทำงาน
+plt.plot(x_coords, y_coords, c='r', label='เส้นทางการเคลื่อนที่')  # เส้นทางจาก optimal_path
+plt.xlabel('X (เมตร)')
+plt.ylabel('Y (เมตร)')
+plt.title('พื้นที่การทำงานของหุ่นยนต์ SCARA พร้อมเส้นทางการเคลื่อนที่')
+plt.axis('equal')
+plt.grid(True)
+plt.legend()
+plt.show()
+
+# ฟังก์ชันสำหรับคำนวณ Inverse Kinematics
+def calculate_ik(x_coords, y_coords, z_coords, a_1, a_2, z_base):
+    joint_trajectory = []  # สำหรับเก็บค่ามุมข้อต่อ (q1, q2, d3)
+    for x, y, z in zip(x_coords, y_coords, z_coords):
+        r = np.hypot(x, y)  # คำนวณระยะ r = sqrt(x^2 + y^2)
+        
+        # คำนวณ cos และ sin ของ q2
+        cos_q2 = (r**2 - a_1**2 - a_2**2) / (2 * a_1 * a_2)
+        if abs(cos_q2) > 1.0:
+            print(f"ตำแหน่งเป้าหมาย ({x:.2f}, {y:.2f}, {z:.2f}) อยู่นอกขอบเขตการเข้าถึง")
+            joint_trajectory.append(None)
+            continue
+        sin_q2 = np.sqrt(1 - cos_q2**2)
+
+        # มีตัวเลือกสำหรับ q2 (สองค่า)
+        q2_options = [np.arctan2(sin_q2, cos_q2), np.arctan2(-sin_q2, cos_q2)]
+
+        # เลือก q2 ที่เหมาะสม
+        for q2 in q2_options:
+            k1 = a1 + a2 * np.cos(q2)
+            k2 = a2 * np.sin(q2)
+            q1 = np.arctan2(y, x) - np.arctan2(k2, k1)  # คำนวณ q1
+            d3 = z - z_base  # คำนวณ d3
+
+            # เก็บค่ามุมข้อต่อ (q1, q2, d3)
+            joint_trajectory.append((q1, q2, d3))
+            break  # ใช้ตัวเลือก q2 แรกที่เหมาะสม
+    return joint_trajectory
+
+# เรียกใช้ฟังก์ชัน IK
+joint_trajectory = calculate_ik(x_coords, y_coords, z_coords, a_1, a_2, z_base)
+
+# แสดงผลลัพธ์
+for i, joint in enumerate(joint_trajectory):
+    if joint is not None:
+        q1, q2, d3 = joint
+        print(f"จุดที่ {i+1}:")
+        print(f"  q1 = {np.degrees(q1):.2f} องศา")
+        print(f"  q2 = {np.degrees(q2):.2f} องศา")
+        print(f"  d3 = {d3:.3f} เมตร")
+    else:
+        print(f"จุดที่ {i+1}: ไม่สามารถเข้าถึงได้")
