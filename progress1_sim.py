@@ -42,7 +42,7 @@ def separate_points_by_layers(gcode_file):
     return layers_of_points
 
 # Provide the path to your G-code file
-gcode_file_path = r"C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\new_square.gcode"
+gcode_file_path = r"C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\newsquare.gcode"
 layers_of_points = separate_points_by_layers(gcode_file_path)
 
 # Function to calculate Euclidean distance
@@ -342,16 +342,16 @@ import matplotlib.pyplot as plt
 # a_1 = 0.145      # ความยาวของแขนแรก (100 มม.)
 # a_2 = 0.145      # ความยาวของแขนที่สอง (100 มม.)
 d3_min = 0.0   # ตำแหน่ง Z ต่ำสุดของข้อต่อ Prismatic (0 มม.)
-d3_max = 0.2   # ตำแหน่ง Z สูงสุดของข้อต่อ Prismatic (100 มม.)
+d3_max = 50   # ตำแหน่ง Z สูงสุดของข้อต่อ Prismatic (100 มม.)
 
-a_1 = 0.320      # ความยาวของแขนแรก (100 มม.)
-a_2 = 0.320      # ความยาวของแขนที่สอง (100 มม.)
+# a_1 = 0.320      # ความยาวของแขนแรก (100 มม.)
+# a_2 = 0.320      # ความยาวของแขนที่สอง (100 มม.)
 
 # สร้างหุ่นยนต์ SCARA ด้วย MDH parameters
 robot = rtb.DHRobot([
-    rtb.RevoluteMDH(alpha=0.0, a=a_1, d=0.0, offset=0.0, qlim=[-np.pi, np.pi]),
-    rtb.RevoluteMDH(alpha=0.0, a=a_2, d=0.0, offset=0.0, qlim=[-np.pi, np.pi]),
-    rtb.PrismaticMDH(alpha=0.0, a=0.0, theta=0.0, offset=0.0, qlim=[d3_min, d3_max]),
+    rtb.RevoluteMDH(alpha=0.0, a=0, d=320, offset=0.0, qlim=[-np.pi, np.pi]),
+    rtb.RevoluteMDH(alpha=0.0, a=320, d=0.0, offset=0.0, qlim=[-np.pi, np.pi]),
+    rtb.PrismaticMDH(alpha=180, a=0.0, theta=0.0, offset=0.0, qlim=[d3_min, d3_max]),
 ], name='SCARA Robot')
 
 # ---- Generate Workspace ----
@@ -361,8 +361,8 @@ theta2 = np.linspace(30, 0, 300)
 Theta1, Theta2 = np.meshgrid(theta1, theta2)
 
 # คำนวณตำแหน่งปลายแขนหุ่นยนต์ในระนาบ XY
-X = a_1 * np.cos(Theta1) + a_2 * np.cos(Theta1 + Theta2)
-Y = a_1 * np.sin(Theta1) + a_2 * np.sin(Theta1 + Theta2)
+X = 320 * np.cos(Theta1) + 320 * np.cos(Theta1 + Theta2)
+Y = 320 * np.sin(Theta1) + 320 * np.sin(Theta1 + Theta2)
 
 # ---- Use Coordinates from optimal_path ----
 # สมมติว่า optimal_path มีอยู่แล้ว และเป็นลิสต์ของจุด [(x1, y1, z1), (x2, y2, z2), ...]
@@ -372,21 +372,17 @@ x_coords = [point[0] for point in optimal_path]
 y_coords = [point[1] for point in optimal_path]
 z_coords = [point[2] for point in optimal_path]
 
-x_coords = np.array(x_coords) / 1000.0  # แปลงเป็นเมตร
-y_coords = np.array(y_coords) / 1000.0
-z_coords = np.array(z_coords) / 1000.0
-# หากพิกัดเป็นมิลลิเมตรและต้องการแปลงเป็นเมตร ให้ใช้:
-# x_coords = [x / 1000.0 for x in x_coords]
-# y_coords = [y / 1000.0 for y in y_coords]
-# z_coords = [z / 1000.0 for z in z_coords]
+x_coords = np.array(x_coords)+150   # แปลงเป็นเมตร
+y_coords = np.array(y_coords)+50
+z_coords = np.array(z_coords) 
 
 # ---- Visualization ----
 plt.figure(figsize=(8, 8))
-plt.plot(X, Y, '.', markersize=1, label='พื้นที่การทำงาน')  # พื้นที่การทำงาน
-plt.plot(x_coords, y_coords, c='r', label='เส้นทางการเคลื่อนที่')  # เส้นทางจาก optimal_path
-plt.xlabel('X (เมตร)')
-plt.ylabel('Y (เมตร)')
-plt.title('พื้นที่การทำงานของหุ่นยนต์ SCARA พร้อมเส้นทางการเคลื่อนที่')
+plt.plot(X, Y, '.', markersize=1, label='workspace')  # พื้นที่การทำงาน
+plt.plot(x_coords, y_coords, c='r', label='trajectory')  # เส้นทางจาก optimal_path
+plt.xlabel('X (meter)')
+plt.ylabel('Y (mteter)')
+plt.title('trajectory on workspace')
 plt.axis('equal')
 plt.grid(True)
 plt.legend()
@@ -422,7 +418,7 @@ def calculate_ik(x_coords, y_coords, z_coords, a_1, a_2, z_base):
     return joint_trajectory
 
 # เรียกใช้ฟังก์ชัน IK
-joint_trajectory = calculate_ik(x_coords, y_coords, z_coords, a_1, a_2, z_base)
+joint_trajectory = calculate_ik(x_coords, y_coords, z_coords, 320, 320, z_base)
 
 # แสดงผลลัพธ์
 for i, joint in enumerate(joint_trajectory):
