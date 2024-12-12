@@ -43,7 +43,7 @@ def separate_points_by_layers(gcode_file):
     return layers_of_points
 
 # Provide the path to your G-code file
-gcode_file_path = r"C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\new_square.gcode"
+gcode_file_path = r"C:\Users\muigims\Desktop\fibo\year3\kinematics\project_6525_6555\project_kinematics\g-code\new_square.gcode"
 layers_of_points = separate_points_by_layers(gcode_file_path)
 
 # Function to calculate Euclidean distance
@@ -156,7 +156,7 @@ sampling_time = 0.01  # seconds
 time_per_segment = 1.0  # Adjust as needed
 trajectory_points = generate_quintic_trajectory(optimal_path, T_segment=time_per_segment, dt=sampling_time)
 
-
+print(trajectory_points)
 
 
 # Extracting coordinates
