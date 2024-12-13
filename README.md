@@ -684,10 +684,15 @@ plt.show()
 ```
 
 ![p_v_s_graph](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_graph.png) <br>
+
 กราฟนี้แสดงถึงตำแหน่ง ความเร็ว ความเร่งของแต่ละแกน ในระนาบ 2 มิติ ซึ่งต้องการ plot เพื่อดูว่า ความเร็วและความเร่งมีความต่อเนื่องกันหรือไม่ ซึ่งเมื่อซูมเข้าไปจะเห็นได้ว่าความเร็ว ความเร่ง มีความต่อเนื่องกันตามที่ต้องการ <br>
+
 ![p_v_s_zoom](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png) <br>
+
 จากนั้นนำ trajectory ที่ได้มา plot เป้น animation <br>
+
 ![animation](https://github.com/muigims/project_kinematics/blob/main/picture/animation.gif) <br>
+
 ### 3.6 Inverse Kinematics
 ในขั้นตอนนี้ ได้มีการกำหนดความยาวของแขนกลเป็น $L_1$ และ $L_2$ ให้มีค่าเท่ากับ 320 mm เพื่อนำค่าตำแหน่งที่อ่านได้จาก trajectory ในรูปแบบของ $x,y,z$ มาคำนวณ โดยได้มีการปรับค่าเพื่อชดเชย offset ตำแหน่งเริ่มต้นของหุ่นยนต์ โดยป้องกันไม่ให้หุ่นยนต์เกิดภาวะ Singularity 
 
@@ -760,10 +765,10 @@ print("Saved interpolated joint angles to 'q.csv'")
 Generated 30124 trajectory points at 0.01-second intervals.
 ```
 
-![csv_q](https://github.com/muigims/project_kinematics/blob/main/picture/csv_q.png)
+![csv_q](https://github.com/muigims/project_kinematics/blob/main/picture/csv_q.png) <br>
 
-เมื่อนำมา plot กราฟเมื่อให้ดูการกระจายตัวของค่า q จะเห็นได้ว่าค่า $q_1,q_2$ มีการเปลี่ยนแปลงมากในช่วงแรกและช่วงปลายตามตำแหน่งที่อ่านได้จาก g-code ส่วน $q_3$ มีการเปลี่ยนแปลง 5 ครั้ง ตามจำนวน layer ของ CAD ที่วาดไว้
-![q_plot](https://github.com/muigims/project_kinematics/blob/main/picture/q_plot.png)
+เมื่อนำมา plot กราฟเมื่อให้ดูการกระจายตัวของค่า q จะเห็นได้ว่าค่า $q_1,q_2$ มีการเปลี่ยนแปลงมากในช่วงแรกและช่วงปลายตามตำแหน่งที่อ่านได้จาก g-code ส่วน $q_3$ มีการเปลี่ยนแปลง 5 ครั้ง ตามจำนวน layer ของ CAD ที่วาดไว้ <br> 
+![q_plot](https://github.com/muigims/project_kinematics/blob/main/picture/q_plot.png) <br>
 
 ### 3.7 Dynamic Calculation
 
@@ -893,26 +898,40 @@ assignin('base', 'q3_input_data', q3_data);
 
 ซึ่งจะได้ผลลัพธ์ใน workspace ตามในภาพด้านขวา<br>
 ![spitq](https://github.com/muigims/project_kinematics/blob/main/picture/spit_q.png) <br>
+
 จากนั้นทำการดึงข้อมูล .urdf ที่เราได้จากการวาด CAD จากโปรแกรม solidwork โดยภาพ scara robot ของเรามีหน้าตาดังนี้<br>
+
 ![cad](https://github.com/muigims/project_kinematics/blob/main/picture/cad.png) <br>
+
 ซึ่งเมื่อมาวิเคราะห์และทำตาราง MDH-Parameter จะได้ดังนี้<br>
+
 ![mdh](https://github.com/muigims/project_kinematics/blob/main/picture/mdh.png) <br>
+
 โดยในไฟล์ .urdf ที่ได้เมื่อกำหนด materials,point,axis จะทำให้ได้ต่าง ๆ ออกมาดังนี้<br>
+
 ![parameter_urdf](https://github.com/muigims/project_kinematics/blob/main/picture/parameter_urdf.png) <br>
+
 รูปภาพการกำหนดแกนของหุ่น scara robot <br>
+
 ![axis](https://github.com/muigims/project_kinematics/blob/main/picture/axis.png) <br>
+
 จากนั้นทำการ import .urdf ของ scara robot เข้าสู่ mmatlab จะได้ภาพรวม model ดังนี้ <br>
+
 ![import_scara](https://github.com/muigims/project_kinematics/blob/main/picture/import_scara.png) <br>
+
 จากนั้นทำการตั้งค่า limit ของแต่ละ joint (สามารถตั้งค่า limit ได้ตั้งแต่ใน solidwork) ซึ่งมีการกำหนด limit ต่าง ๆ ดังนี้ <br>
+
 ![limit_q1](https://github.com/muigims/project_kinematics/blob/main/picture/limit_q1.png)<br>
 ![limit_q2](https://github.com/muigims/project_kinematics/blob/main/picture/limit_q2.png)<br>
 ![limit_q3](https://github.com/muigims/project_kinematics/blob/main/picture/limit_q3.png)<br>
 
-จากนั้นทำการดึงค่า $q_1,q_2,q_3$ เพื่อทำการป้อนเป็น input ของ model จากนั้นให้เลือก output ขงอ ทodel เป็นค่า $\tau$ ดังนี้
-![dynamic_model](https://github.com/muigims/project_kinematics/blob/main/picture/dynamic_model.png)
+จากนั้นทำการดึงค่า $q_1,q_2,q_3$ เพื่อทำการป้อนเป็น input ของ model จากนั้นให้เลือก output ขงอ ทodel เป็นค่า $\tau$ ดังนี้ <br>
+![dynamic_model](https://github.com/muigims/project_kinematics/blob/main/picture/dynamic_model.png) <br>
 
-ต่อในมาขั้นตอนนี้เพื่อทำการ Recheck ว่า scara robot ของเราสามารถเคลื่อนที่ตามจุดที่กำหนดได้หรือไม่ และมีการเปลี่ยนแปลงของ Torque ที่ถูกต้องหรือไม่ จึงได้ทำการกำหนดจุด Via point ขึ้นมาเพื่อดูพฤติกรรมของ scara robot และนำมาดู Simulation และกราฟ Torque ที่เกิดขึ้น เนื่องจากข้อจำกัดทางด้าน G-code เพราะหากต้องการให้หุ่นยนต์เคลื่อนที่ในพื้นที่วงกว้าง จะต้องใช้ไฟล์ขนาดใหญ่และใช้เวลานานในการรัน เนื่องจากในไฟล์ G-code จะมีการกำหนดจุดหลายจุด จึงได้ำกหนดจุดขึ้นมาเพื่อให้ดูพฤติกรรมการเคลื่อนที่และแรงบิดได้ง่ายขึ้น
-![# test](https://github.com/muigims/project_kinematics/blob/main/picture/dem.gif)
+ต่อในมาขั้นตอนนี้เพื่อทำการ Recheck ว่า scara robot ของเราสามารถเคลื่อนที่ตามจุดที่กำหนดได้หรือไม่ และมีการเปลี่ยนแปลงของ Torque ที่ถูกต้องหรือไม่ จึงได้ทำการกำหนดจุด Via point ขึ้นมาเพื่อดูพฤติกรรมของ scara robot และนำมาดู Simulation และกราฟ Torque ที่เกิดขึ้น เนื่องจากข้อจำกัดทางด้าน G-code เพราะหากต้องการให้หุ่นยนต์เคลื่อนที่ในพื้นที่วงกว้าง จะต้องใช้ไฟล์ขนาดใหญ่และใช้เวลานานในการรัน เนื่องจากในไฟล์ G-code จะมีการกำหนดจุดหลายจุด จึงได้ำกหนดจุดขึ้นมาเพื่อให้ดูพฤติกรรมการเคลื่อนที่และแรงบิดได้ง่ายขึ้น <br>
+
+![# test](https://github.com/muigims/project_kinematics/blob/main/picture/dem.gif) <br>
+
 จากวีดีโอจะเห็นได้ว่าจากตำแหน่งที่กำหนดในภาพด้านซ้าย หุ่นยนต์มีการเคลื่อนที่ตามจุดที่กำหนดได้อย่างถูกต้อง และแรงบิดที่เกิดขึ้นใน Joint ที่ 1 และ 2 มีความสอดคล้องกับเส้นทางการเคลื่อนที่ตามคลิปวีดีโอ 
 
 ## บทที่ 4 ผลการศึกษา
