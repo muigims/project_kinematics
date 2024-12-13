@@ -659,7 +659,7 @@ plt.show()
 ![p_v_s_graph](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_graph.png) <br>
 กราฟนี้แสดงถึงตำแหน่ง ความเร็ว ความเร่งของแต่ละแกน ในระนาบ 2 มิติ ซึ่งต้องการ plot เพื่อดูว่า ความเร็วและความเร่งมีความต่อเนื่องกันหรือไม่ ซึ่งเมื่อซูมเข้าไปจะเห็นได้ว่าความเร็ว ความเร่ง มีความต่อเนื่องกันตามที่ต้องการ <br>
 ![p_v_s_zoom](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png)
-![animation](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png)
+![animation](https://github.com/muigims/project_kinematics/blob/main/picture/animation.mp4)
 ### 3.6 Inverse Kinematics
 ในขั้นตอนนี้ ได้มีการกำหนดความยาวของแขนกลเป็น $L_1$ และ $L_2$ ให้มีค่าเท่ากับ 320 mm เพื่อนำค่าตำแหน่งที่อ่านได้จาก trajectory ในรูปแบบของ $x,y,z$ มาคำนวณ โดยได้มีการปรับค่าเพื่อชดเชย offset ตำแหน่งเริ่มต้นของหุ่นยนต์ โดยป้องกันไม่ให้หุ่นยนต์เกิดภาวะ Singularity 
 
