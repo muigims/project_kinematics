@@ -156,7 +156,7 @@ $$
 
 โดยที่ $(\Theta)$ คือ มุมที่ข้อต่อแรกทำกับแนวนอน <br>
      $(\Phi)$ คือ มุมที่ข้อต่อที่สองทำกับแนวนอน
-![Position Of Arms](https://github.com/muigims/calculator/blob/main/Picture2.png)
+![Position Of Arms](https://github.com/muigims/project_kinematics/blob/main/picture/Picture2.png)
 
 **Inverse Kinematics** <br>
 ในการวิเคราะห์การเคลื่อนที่ผกผัน (Inverse Kinematics) ของแขนกล Scara จุดประสงค์คือการหามุมที่ข้อต่อของแขนกลต้องหมุนเพื่อให้ปลายแขนกลหรือ end effector ไปถึงตำแหน่งที่ต้องการ ซึ่งในที่นี้คือจุด $P(x,y)$ บนแกน X และ Y ตามรูปที่ 3 
@@ -208,7 +208,7 @@ $$
 \theta = (\tan ^-1)  {Y}/{X-Β}
 $$
 
-ในกรณีของแขนกล Scara สามารถมีตำแหน่งปลายแขนที่เหมือนกันในมุมข้อต่อต่างกันสองตำแหน่ง ซึ่งในรูปที่ 3 แสดงตำแหน่ง "ซ้าย" และ "ขวา" ของแขนกลที่สามารถไปถึงจุดเดียวกันได้ การเลือกมุมของข้อต่อควรพิจารณาเงื่อนไขและข้อกำหนดของระบบเพื่อหลีกเลี่ยงปัญหาการเกิด Singularity ที่อาจเกิดขึ้นระหว่างการเคลื่อนที่
+ในกรณีของแขนกล Scara สามารถมีตำแหน่งปลายแขนที่เหมือนกันในมุมข้อต่อต่างกันสองตำแหน่ง ซึ่งในรูปที่ 3 แสดงตำแหน่ง "ซ้าย" และ "ขวา" ของแขนกลที่สามารถไปถึงจุดเดียวกันได้ การเลือกมุมของข้อต่อควรพิจารณาเงื่อนไขและข้อกำหนดของระบบเพื่อหลีกเลี่ยงปัญหาการเกิด Singularity ที่อาจเกิดขึ้นระหว่างการเคลื่อนที่ <br>
 ![Different Positions Of Scara Arms](https://github.com/muigims/project_kinematics/blob/main/picture/Picture3.png)
 
 #### 2.1.6	Dynamic Analysis
@@ -301,7 +301,7 @@ $$
 
 #### 2.2 งานวิจัยที่เกี่ยวข้องกับงาน 
 งานวิจัยนี้มุ่งเน้นการออกแบบและทดลองสร้าง Scara Printer โดยทำการคำนวณหาค่าต่างๆ เพื่อวางแผนเส้นทางการเคลื่อนที่ของหัวพิมพ์ รวมถึงการวิเคราะห์เชิงจลนศาสตร์ (Kinematics) และพลศาสตร์ (Dynamics) ของเครื่องพิมพ์แบบ Scara ในขั้นตอนการออกแบบนั้นได้ดำเนินการคำนวณค่า Forward Kinematics และ Inverse Kinematics รวมถึงการวิเคราะห์ Dynamics และกำหนดสมการ Trajectory เพื่อหาทิศทางและตำแหน่งที่หัวพิมพ์ควรเคลื่อนที่ ซึ่งผลการคำนวณนี้แสดงออกมาในรูปของกราฟ <br>
-![แสดง (A) Position (B) Velocity (C) Acceleration (D) Torque](https://github.com/muigims/project_kinematics/blob/main/picture/Picture4.png)
+![แสดง (A) Position (B) Velocity (C) Acceleration (D) Torque](https://github.com/muigims/project_kinematics/blob/main/picture/Picture4.png) <br>
 กราฟในรูปที่ 4 แสดง (A) ตำแหน่ง (Position), (B) ความเร็ว (Velocity), (C) ความเร่ง (Acceleration), และ (D) แรงบิด (Torque) โดยใช้การแก้สมการการเคลื่อนที่แบบทีละขั้นด้วยการเพิ่มค่าเวลาทีละ 0.01 วินาที โดยใช้ซอฟต์แวร์ MATLAB สำหรับค่าตั้งต้นที่กำหนดคือ $t_0=0,t_f=10;q_0=0,q_f=\pi/6 ;(q_0 ) = 0q,(q_f ) =0$ ซึ่งได้แสดงกราฟแสดงตำแหน่ง ความเร็ว ความเร่ง และแรงบิดของแขนกลตัวที่ 1 และตัวที่ 2 
 นอกจากนี้ งานวิจัยยังได้กำหนดคุณลักษณะทางเทคนิคของ Scara Printer
 ![](https://github.com/muigims/project_kinematics/blob/main/picture/Picture5.png)
@@ -521,7 +521,6 @@ trajectory_z_coords = trajectory_points[:, 2]
 
 จากการคำนวณทั้งหมด สามารถนำมา plot เป็นกราฟได้ดังนี้
 ```
-
 # Plotting all graphs in one figure
 fig = plt.figure(figsize=(18, 12))
 
@@ -568,10 +567,12 @@ ax4.legend()
 plt.tight_layout()
 plt.show()
 ```
+![4praph](https://github.com/muigims/project_kinematics/blob/main/picture/4praph.png)
+
 ทำให้สามารถดู
 - กราฟที่ 1 คึอ จุดที่อ่านได้จาก G-code 
 - กราฟที่ 2 คึอ Optimal path เอาจุดที่อ่านได้มาต่อการเป้นเส้นทางการเคลื่อนที่
-- กราฟที่ 3 คึอQuintic Trajectory เอาจุดที่ได้มาเข้าสมการ quintic trajectory แต่ในรูปนี้จะไม่ค่อแยเห็นความแตกต่างมากนัก เนื่องจากจุดที่อ่านได้จาก G-code มีระยะที่ใกล้กันมาก เพื่อนำมา plot ในกราฟ 3D จึงไม่สามารถเห็นความแตกต่างได้
+- กราฟที่ 3 คึอ Quintic Trajectory เอาจุดที่ได้มาเข้าสมการ quintic trajectory แต่ในรูปนี้จะไม่ค่อยเห็นความแตกต่างมากนัก เนื่องจากจุดที่อ่านได้จาก G-code มีระยะที่ใกล้กันมาก เมื่อนำมา plot ในกราฟ 3D จึงไม่สามารถเห็นความแตกต่างได้
 - กราฟที่ 4 คึอ End effector Pose คือตำแหน่งที่ end effector เคลื่อนที่ไป
 ### 3.5 Velocity and Acceleration Calculation
 
@@ -614,7 +615,51 @@ time_acceleration = time[:-2]
  [   3.37824    -239.85504001    0.        ]
  [   1.73754    -123.36534       0.        ]]
 ```
+เมื่อนำมา plot กราฟจะได้ดังนี้
 
+```
+# Plot Position, Velocity, and Acceleration
+fig, axs = plt.subplots(3, 1, figsize=(10, 12))
+
+# Position
+axs[0].plot(time, trajectory_points[:, 0], label='X Position', color='r')
+axs[0].plot(time, trajectory_points[:, 1], label='Y Position', color='g')
+axs[0].plot(time, trajectory_points[:, 2], label='Z Position', color='b')
+axs[0].set_title('Position (X, Y, Z)')
+axs[0].set_xlabel('Time [s]')
+axs[0].set_ylabel('Position')
+axs[0].legend()
+axs[0].grid(True)
+
+# Velocity
+axs[1].plot(time_velocity, velocity[:, 0], label='X Velocity', color='r')
+axs[1].plot(time_velocity, velocity[:, 1], label='Y Velocity', color='g')
+axs[1].plot(time_velocity, velocity[:, 2], label='Z Velocity', color='b')
+axs[1].set_title('Velocity (X, Y, Z)')
+axs[1].set_xlabel('Time [s]')
+axs[1].set_ylabel('Velocity')
+axs[1].legend()
+axs[1].grid(True)
+
+# Acceleration
+axs[2].plot(time_acceleration, acceleration[:, 0], label='X Acceleration', color='r')
+axs[2].plot(time_acceleration, acceleration[:, 1], label='Y Acceleration', color='g')
+axs[2].plot(time_acceleration, acceleration[:, 2], label='Z Acceleration', color='b')
+axs[2].set_title('Acceleration (X, Y, Z)')
+axs[2].set_xlabel('Time [s]')
+axs[2].set_ylabel('Acceleration')
+axs[2].legend()
+axs[2].grid(True)
+
+# Adjust layout and show
+plt.tight_layout()
+plt.show()
+```
+
+![p_v_s_graph](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_graph.png) <br>
+กราฟนี้แสดงถึงตำแหน่ง ความเร็ว ความเร่งของแต่ละแกน ในระนาบ 2 มิติ ซึ่งต้องการ plot เพื่อดูว่า ความเร็วและความเร่งมีความต่อเนื่องกันหรือไม่ ซึ่งเมื่อซูมเข้าไปจะเห็นได้ว่าความเร็ว ความเร่ง มีความต่อเนื่องกันตามที่ต้องการ <br>
+![p_v_s_zoom](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png)
+![animation](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png)
 ### 3.6 Inverse Kinematics
 ในขั้นตอนนี้ ได้มีการกำหนดความยาวของแขนกลเป็น $L_1$ และ $L_2$ ให้มีค่าเท่ากับ 320 mm เพื่อนำค่าตำแหน่งที่อ่านได้จาก trajectory ในรูปแบบของ $x,y,z$ มาคำนวณ โดยได้มีการปรับค่าเพื่อชดเชย offset ตำแหน่งเริ่มต้นของหุ่นยนต์ โดยป้องกันไม่ให้หุ่นยนต์เกิดภาวะ Singularity 
 
@@ -831,6 +876,17 @@ assignin('base', 'q3_input_data', q3_data);
 
 
 ## บทที่ 4 ผลการศึกษา
-จาก
+### 4.1 Optimal Path & Trajectory 
+จากการศึกษา Optimal Path & Trajectory เมื่อ plot กราฟออกมาดูตามรูปด้านล่างนี้ 
+# รูป
+จะเห็นได้ว่ากราฟทั้ง 4 กราฟมีตำแหน่งของจุดที่ตำแหน่งเดียวกัน โดยภาพแรกคือ จุดที่อ่านว่าได้จาก G-code ทั้งหมด ซึ่งยังไม่ผ่านการคิดหาเส้นทางการเคลื่อนที่ ภาพที่ 2 คือ เส้นทางการเคลื่อนที่ที่เอาจุดจากกราฟที่ 1 มาเรียงต่อกัน ภาพที่ 3 คือ กราฟที่แสดงเส้นทางการเคลื่อนที่หลังจากใช้ Quintic Trajectory แล้ว ซึ่งจากกราฟที่ให้มาจะเห็นได้ว่าภาพที่ 2 และ ภาพที่ 3 ไม่มีความแตกต่างกัน เนื่องจากการ plot กราฟตำแหน่งใน 3 มิติ ในระยะห่างจุดที่ไม่มาก ทำให้ไม่สามารถเห็นได้ว่าการ plot เส้นทางการเคลื่อนที่ปกติและแบบใช้ quintic trajectory แล้วแตกต่างกัน จึงทำให้กราฟภาพที่ และ 3 มีความเหมือนกันมาก และสุดท้ายภาพที่ 4 คือตำแหน่งที่ปลาย end effector ขยับไป ซึ่งจะเห็นได้ว่าตำแหน่งทมี่ end effector ขยับไปจริง มีความถี่มากกว่า เนื่องจากเป็นการ plot จุดทุกจุดที่ end effector เคลื่อนที่ไป
+# รูป
 
+### 4.2 Posiotion & Velocity & Accerelation 
+หลังจากที่ได้ใช้ Quintic Trajectory เนื่องจากต้องการให้ความเร็ว และความเร่งมีความต่อเนื่องกัน จึงนำมา plot เป็นกราฟที่แสดงแต่ละแกนใน 2 มิติดู จะเห็นได้ว่าตำแหน่งที่ได้เปลี่ยนแปลงตามจุดที่ได้จาก G-code ทั้งในแนวแกน x,y,z 
+# รูป ใหญ่
+# รูป ซูม
+จากกราฟจะเห็นได้ว่า ความเร็ว และความเร่งในการเคลื่อนทีมีความต่อเนื่องกัน แต่มีส่วนแรกที่ต้องเคลื่อนที่ในแกน y มากทำให้เกิดความแตกต่างของกราฟความเร็วมาก แต่เมื่อซูมเข้าไปดูจะเห็นได้ว่ากราฟยังมีความต่อเนื่องกันอยู่
+
+### 4.3 
 ## บทที่ 5 สรุปผล และข้อเสนอแนะ
