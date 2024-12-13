@@ -1,6 +1,10 @@
 # Simulation Kinematic For Scara Robot Printer
 โปรเจคนี้มีวัตถุประสงค์เพื่อจำลองเส้นทางการเคลื่อนที่ของหัวพิมพ์ในเครื่องพิมพ์ 3 มิติแบบแขนกล SCARA (Selective Compliance Articulated Robot Arm) ซึ่งเป็นกลไกที่นิยมใช้ในระบบการพิมพ์ 3 มิติ เนื่องจากมีความสามารถในการเคลื่อนที่ในแนวระนาบอย่างรวดเร็วและแม่นยำ โดยโครงการนี้เน้นการศึกษาเชิงจลนศาสตร์ของการเคลื่อนที่ รวมทั้งคำนวณ Invesre Kinematics และ Dynamic Model  เพื่อสร้างแบบจำลองเส้นทางการเคลื่อนที่ พร้อมกับแสดงผลเส้นทางการเคลื่อนที่ในรูปแบบสามมิติ พร้อมทั้งแบบจำลองของ SCARA Robot เมื่อเทียบกับแรงบิดที่เกิดขึ้น ซึ่งช่วยให้สามารถวิเคราะห์และปรับปรุงการเคลื่อนที่ของหัวพิมพ์ได้อย่างแม่นยำ
 
+## Members
+Tasphon Sinmuang            65340500025             
+Sirimanee Maneewetwarodom   65340500055
+   
 
 ## บทที่ 1 บทนำ (Introduction)
 ### 1.1 จุดประสงค์โครงการ
@@ -982,7 +986,3 @@ assignin('base', 'q3_input_data', q3_data);
 
 - https://www.cuemath.com/linear-interpolation-formula/
 
-## ผู้จัดทำ
-Tasphon Sinmuang            65340500025             
-Sirimanee Maneewetwarodom   65340500055
-   
