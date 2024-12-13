@@ -328,12 +328,24 @@ $$
 
 ## บทที่ 3 วิธีดำเนินงาน
 ### System Diagram
+![systemdi](https://github.com/muigims/project_kinematics/blob/main/picture/systemdi.png)<br>
+
 - Input
-    - Parameter of Scara robot
+    - Parameter of scara
+        - Material (part) / Mass (kg)
+        - Number of Link (l)
+        - Length of Link (m)
+        - Number of Joint (q)
+        - Type of Joint (0,1)
     - G-code
-- Kinematics 
+    - Define Position (x,y,z)
 - Output
+    - Position of End effector
     - Position / Velocity / Accerelary graph
+    - Dynamics calculation $(torque_1,torque_2)$
+    - position of joint  $(q_1,q_2,q_3)$
+    - Angles of joint $(\theta_1,\theta_2)$
+    - Simulation Robot $(torque_1,torque_2)$
 ### 3.1 Make CAD in Solidwork
 เริ่มจากสร้างไฟล์ new_square.gcode สี่เหลี่ยมที่มีความกว้าง 5 mm ยาว 5 mm และสูง 1 mm ตามรูปด้านล่าง
 ![](https://github.com/muigims/project_kinematics/blob/main/picture/Picture9.png) <br>
@@ -578,7 +590,7 @@ ax4.legend()
 plt.tight_layout()
 plt.show()
 ```
-![4praph](https://github.com/muigims/project_kinematics/blob/main/picture/4praph.png)
+![4graph](https://github.com/muigims/project_kinematics/blob/main/picture/4graph.png)
 
 ทำให้สามารถดู
 - กราฟที่ 1 คึอ จุดที่อ่านได้จาก G-code 
@@ -671,7 +683,7 @@ plt.show()
 กราฟนี้แสดงถึงตำแหน่ง ความเร็ว ความเร่งของแต่ละแกน ในระนาบ 2 มิติ ซึ่งต้องการ plot เพื่อดูว่า ความเร็วและความเร่งมีความต่อเนื่องกันหรือไม่ ซึ่งเมื่อซูมเข้าไปจะเห็นได้ว่าความเร็ว ความเร่ง มีความต่อเนื่องกันตามที่ต้องการ <br>
 ![p_v_s_zoom](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png) <br>
 จากนั้นนำ trajectory ที่ได้มา plot เป้น animation <br>
-![animation](https://github.com/muigims/project_kinematics/blob/main/picture/animation.mp4) <br>
+![animation](https://github.com/muigims/project_kinematics/blob/main/picture/animation.gif) <br>
 ### 3.6 Inverse Kinematics
 ในขั้นตอนนี้ ได้มีการกำหนดความยาวของแขนกลเป็น $L_1$ และ $L_2$ ให้มีค่าเท่ากับ 320 mm เพื่อนำค่าตำแหน่งที่อ่านได้จาก trajectory ในรูปแบบของ $x,y,z$ มาคำนวณ โดยได้มีการปรับค่าเพื่อชดเชย offset ตำแหน่งเริ่มต้นของหุ่นยนต์ โดยป้องกันไม่ให้หุ่นยนต์เกิดภาวะ Singularity 
 
@@ -854,7 +866,7 @@ print("Saved joint angles, velocities, accelerations, and torques to 'q_with_der
 
 ### 3.8 Dynamic Model
 ในขั้นตอนนี้จะทำการ import ไฟล์ q.csv เข้าสู่ Matlab โดยทำการเพิ่มเข้าสู่ workspace <br>
-![immport_q](https://github.com/muigims/project_kinematics/blob/main/picture/immport_q.png) <br>
+![import_q](https://github.com/muigims/project_kinematics/blob/main/picture/import_q.png) <br>
 จากนั้นทำการ spit ค่าต่าง ๆ ในไฟล์ ให้อยู่แยกกันใน workspace เพื่อให้ง่ายต่อการดึงมาใช้ โดยมีขั้นตอนดังนี้
 
 ```
@@ -902,37 +914,47 @@ assignin('base', 'q3_input_data', q3_data);
 ## บทที่ 4 ผลการศึกษา
 ### 4.1 Optimal Path & Trajectory 
 จากการศึกษา Optimal Path & Trajectory เมื่อ plot กราฟออกมาดูตามรูปด้านล่างนี้ <br>
+
 ![](https://github.com/muigims/project_kinematics/blob/main/picture/4graph.png) <br>
+
 จะเห็นได้ว่ากราฟทั้ง 4 กราฟมีตำแหน่งของจุดที่ตำแหน่งเดียวกัน โดยภาพแรกคือ จุดที่อ่านว่าได้จาก G-code ทั้งหมด ซึ่งยังไม่ผ่านการคิดหาเส้นทางการเคลื่อนที่ ภาพที่ 2 คือ เส้นทางการเคลื่อนที่ที่เอาจุดจากกราฟที่ 1 มาเรียงต่อกัน ภาพที่ 3 คือ กราฟที่แสดงเส้นทางการเคลื่อนที่หลังจากใช้ Quintic Trajectory แล้ว ซึ่งจากกราฟที่ให้มาจะเห็นได้ว่าภาพที่ 2 และ ภาพที่ 3 ไม่มีความแตกต่างกัน เนื่องจากการ plot กราฟตำแหน่งใน 3 มิติ ในระยะห่างจุดที่ไม่มาก ทำให้ไม่สามารถเห็นได้ว่าการ plot เส้นทางการเคลื่อนที่ปกติและแบบใช้ quintic trajectory แล้วแตกต่างกัน จึงทำให้กราฟภาพที่ และ 3 มีความเหมือนกันมาก และสุดท้ายภาพที่ 4 คือตำแหน่งที่ปลาย end effector ขยับไป ซึ่งจะเห็นได้ว่าตำแหน่งทมี่ end effector ขยับไปจริง มีความถี่มากกว่า เนื่องจากเป็นการ plot จุดทุกจุดที่ end effector เคลื่อนที่ไป
+
 ![](https://github.com/muigims/project_kinematics/blob/main/picture/4graph_zoom.png) <br>
 
 จากนั้นเมื่อนำมา plot เป็น animation การเคลื่อนที่ โดยให้จุดสีแดงเป็นตำแหน่งที่ End Effector เคลื่อนที่ไป จะทำให้เห็นพฤติกรรมการเคลื่อนที่ขึ้น โดยในช่วงแรกจะมีการเคลื่อนที่ในแนวแกน Y มาก และต่อมาค่อยทำตามรูปสี่เหลี่ยมแต่ละ Layer และในตอนจบจะเห็นได้ว่ามีการเคลื่อนที่ทั้งในแนวแกน X และแกน Y มากเช่นกัน
+
 ![# animation](https://github.com/muigims/project_kinematics/blob/main/picture/animation.gif)
+
 ### 4.2 Posiotion & Velocity & Accerelation 
-หลังจากที่ได้ใช้ Quintic Trajectory เนื่องจากต้องการให้ความเร็ว และความเร่งมีความต่อเนื่องกัน จึงนำมา plot เป็นกราฟที่แสดงแต่ละแกนใน 2 มิติดู จะเห็นได้ว่าตำแหน่งที่ได้เปลี่ยนแปลงตามจุดที่ได้จาก G-code ทั้งในแนวแกน x,y,z มุมของข้อต่อ 
+หลังจากที่ได้ใช้ Quintic Trajectory เนื่องจากต้องการให้ความเร็ว และความเร่งมีความต่อเนื่องกัน จึงนำมา plot เป็นกราฟที่แสดงแต่ละแกนใน 2 มิติดู จะเห็นได้ว่าตำแหน่งที่ได้เปลี่ยนแปลงตามจุดที่ได้จาก G-code ทั้งในแนวแกน x,y,z มุมของข้อต่อ <br>
+
 ![#pvs](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_graph.png)
+
 ![#pvs_zoom](https://github.com/muigims/project_kinematics/blob/main/picture/p_v_s_zoom.png)
+
 จากกราฟจะเห็นได้ว่า ความเร็ว และความเร่งในการเคลื่อนทีมีความต่อเนื่องกัน แต่มีส่วนแรกที่ต้องเคลื่อนที่ในแกน y มากทำให้เกิดความแตกต่างของกราฟความเร็วมาก แต่เมื่อซูมเข้าไปดูจะเห็นได้ว่ากราฟยังมีความต่อเนื่องกันอยู่
 
 
 ### 4.3 Inverse Kinematics
-เมื่อนำค่าตำแหน่งที่ได้มาคำนวณ Invese Kinematics แล้วทำให้ได้ค่าตำแหน่งองศาของ Scara robot ที่เปลี่ยนแปลงไปตามตำแหน่งของปลาย End effedtor ที่เคลื่อนที่ไป
-![#q](https://github.com/muigims/project_kinematics/blob/main/picture/q_plot.png)
+เมื่อนำค่าตำแหน่งที่ได้มาคำนวณ Invese Kinematics แล้วทำให้ได้ค่าตำแหน่งองศาของ Scara robot ที่เปลี่ยนแปลงไปตามตำแหน่งของปลาย End effedtor ที่เคลื่อนที่ไป<br>
+![#q](https://github.com/muigims/project_kinematics/blob/main/picture/q_plot.png)<br>
 จากกราฟจะเห็นได้ว่า q1 มีค่าเริ่มต้นที่ประมาณ 0 องศา และเพิ่มขึ้นอย่างรวดเร็วในช่วงแรก จากนั้นลดลงกลับไปใกล้ค่าเริ่มต้นและมีการเปลี่ยนแปลงเล็กน้อยจนถึงช่วงท้ายของกราฟ ซึ่งมุมเพิ่มขึ้นอย่างรวดเร็วอีกครั้ง มุม q2 เริ่มต้นใกล้กับค่า 80 องศา มีการลดลงเล็กน้อยในช่วงต้น จากนั้นมีการเปลี่ยนแปลงเพียงเล็กน้อย และตอนท้ายมีค่าที่ลดลงแต่เพิ่มขึ้นอย่างรวดเร็วเมื่อเทียบกับภาพรวมกราฟ ข้อต่อ q3 มีลักษณะการเปลี่ยนแปลงแบบขั้นบันได โดยเริ่มต้นที่ค่าใกล้กับ 0 มิลลิเมตร และเพิ่มขึ้นทีละขั้นในช่วงเวลาที่กำหนด 
 
 ### 4.4 Dynamic Calculation
-เมื่อนำค่าที่ได้จากการคำนวณ และการตั้งค่าต่าง ๆ ใน Solidwork มาทำการคำนวณตามสมการ Dynamic ทำให้ได้ค่า Torque ของแต่ละ Joint ออกมา ซึ่งเมื่อนำมา plot กราฟเพื่อดูความสัมพันธ์แล้วจะได้ว่า
-![#dy](https://github.com/muigims/project_kinematics/blob/main/picture/graph_torque.png)
+เมื่อนำค่าที่ได้จากการคำนวณ และการตั้งค่าต่าง ๆ ใน Solidwork มาทำการคำนวณตามสมการ Dynamic ทำให้ได้ค่า Torque ของแต่ละ Joint ออกมา ซึ่งเมื่อนำมา plot กราฟเพื่อดูความสัมพันธ์แล้วจะได้ว่า<br>
+![#dy](https://github.com/muigims/project_kinematics/blob/main/picture/graph_torque.png)<br>
 
 สำหรับกราฟแรงบิดของ q1 (กราฟด้านบน) แรงบิดเริ่มต้นด้วยค่าที่ค่อนข้างต่ำและคงที่ในช่วงแรกของเวลา หลังจากนั้นในช่วงกลางของกราฟ ค่าแรงบิดเพิ่มขึ้นและคงที่อยู่ที่ประมาณ 100 นิวตันเมตร ซึ่งแปลว่าข้อต่อนี้ทำงานได้อย่างปกติและเสถียรในช่วงเวลานี้ แต่ในช่วงท้ายของเวลา (ประมาณ 250-300 วินาที) ค่าแรงบิดกลับลดลงอย่างรวดเร็วและมีค่าเป็นลบ ซึ่งเกิดจากการหมุนกลับทิศของข้อต่อ 
-ในส่วนของกราฟแรงบิดของ q2 (กราฟด้านล่าง) เริ่มต้นด้วยค่าแรงบิดใกล้ศูนย์ในช่วงแรกของเวลา ช่วงกลางของกราฟ แรงบิดคงที่อยู่ที่ประมาณ 50 นิวตันเมตร ซึ่งแสดงถึงการทำงานที่ปกติและเสถียรเหมือนกัน แต่ในช่วงท้ายของเวลา แรงบิดเพิ่มขึ้นอย่างรวดเร็วและพุ่งสูงเกิน 300 นิวตันเมตร ซึ่งสอดคล้องกับตำแหน่งที่ End effector เคลื่อนที่ไป โดยจะมีการเปลี่ยนแปลงมากในช่วงแรกและช่วงท้าย ซึ่งเมื่อมองภาพรวมของกราฟจะเห็นว่าช่วงกลาง ๆ ไม่ค่อยเกิดการเปลี่ยนแปลงของกราฟ แต่เมื่อซูมเข้าไปจึงสามารถเห็นค่าความเปลี่ยนแปลง เนื่องจากเกิดการเปลี่ยนแแปลงไม่มากเมื่อเทียบกับเวลา
-![#zoom_dy](https://github.com/muigims/project_kinematics/blob/main/picture/zoom_graph_torque.png)
+ในส่วนของกราฟแรงบิดของ q2 (กราฟด้านล่าง) เริ่มต้นด้วยค่าแรงบิดใกล้ศูนย์ในช่วงแรกของเวลา ช่วงกลางของกราฟ แรงบิดคงที่อยู่ที่ประมาณ 50 นิวตันเมตร ซึ่งแสดงถึงการทำงานที่ปกติและเสถียรเหมือนกัน แต่ในช่วงท้ายของเวลา แรงบิดเพิ่มขึ้นอย่างรวดเร็วและพุ่งสูงเกิน 300 นิวตันเมตร ซึ่งสอดคล้องกับตำแหน่งที่ End effector เคลื่อนที่ไป โดยจะมีการเปลี่ยนแปลงมากในช่วงแรกและช่วงท้าย ซึ่งเมื่อมองภาพรวมของกราฟจะเห็นว่าช่วงกลาง ๆ ไม่ค่อยเกิดการเปลี่ยนแปลงของกราฟ แต่เมื่อซูมเข้าไปจึงสามารถเห็นค่าความเปลี่ยนแปลง เนื่องจากเกิดการเปลี่ยนแแปลงไม่มากเมื่อเทียบกับเวลา <br>
+![#zoom_dy](https://github.com/muigims/project_kinematics/blob/main/picture/zoom_graph_torque.png)<br>
+
 ### 4.5 Dynamic Model
-ในการทำ Dynamic Simulation ด้วย Matlab ทำให้เห็นว่าหุ่นยนต์มีการเคลื่อนที่อย่างไรอย่างชัดเจน โดยเมื่อดูเทียบกันแล้ว Torque ที่เปลี่ยนแปลงไปมีความสอดคล้องกับตำแหน่งของหุ่นยนต์ที่เคลื่อนที่อยู่ โดยเมื่อเกิดการเปลี่ยนแปลงตำแหน่งที่มากทำให้เกิด Torque มาก
-![#t1](https://github.com/muigims/project_kinematics/blob/main/picture/t1.png)
-![#t2](https://github.com/muigims/project_kinematics/blob/main/picture/t2.png)
-![#t3](https://github.com/muigims/project_kinematics/blob/main/picture/t3.png)
-![# final](https://github.com/muigims/project_kinematics/blob/main/picture/final.gif)
+ในการทำ Dynamic Simulation ด้วย Matlab ทำให้เห็นว่าหุ่นยนต์มีการเคลื่อนที่อย่างไรอย่างชัดเจน โดยเมื่อดูเทียบกันแล้ว Torque ที่เปลี่ยนแปลงไปมีความสอดคล้องกับตำแหน่งของหุ่นยนต์ที่เคลื่อนที่อยู่ โดยเมื่อเกิดการเปลี่ยนแปลงตำแหน่งที่มากทำให้เกิด Torque มาก <br>
+
+![#t1](https://github.com/muigims/project_kinematics/blob/main/picture/t1.png)<br>
+![#t2](https://github.com/muigims/project_kinematics/blob/main/picture/t2.png)<br>
+![#t3](https://github.com/muigims/project_kinematics/blob/main/picture/t3.png)<br>
+![# final](https://github.com/muigims/project_kinematics/blob/main/picture/final.gif)<br>
 
 ## บทที่ 5 สรุปผล และวิเคราะห์ผล
 
@@ -959,3 +981,8 @@ assignin('base', 'q3_input_data', q3_data);
 - https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html
 
 - https://www.cuemath.com/linear-interpolation-formula/
+
+## ผู้จัดทำ
+Tasphon Sinmuang            65340500025             
+Sirimanee Maneewetwarodom   65340500055
+   
