@@ -496,6 +496,7 @@ print("Saved interpolated joint angles to 'q.csv'")
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 # กำหนดมวล (kg)
 m_base = 13.521
 m_link1 = 15.936
